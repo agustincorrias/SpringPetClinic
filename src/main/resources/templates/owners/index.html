@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 <head>
 <meta charset="UTF-8">
 <title>List of Owners</title>
 </head>
 <body>
-	<h1 th:text="'List of Owners'"></h1>
-	<table border="1">
+	<h2 th:text="'List of Owners'"></h2>
+	<table id="owners" class="table table-striped">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>FIRSTNAME</th>
-				<th>LASTNAME</th>
-				<th>TELEPHONE</th>
-				<th>CITY</th>
-				<th>ADDRESS</th>
+				<th style="width: 50px;">Id</th>
+				<th style="width: 100px;">First Name</th>
+				<th style="width: 100px;">Last Name</th>
+				<th style="width: 50px;">Telephone</th>
+				<th style="width: 100px;">City</th>
+				<th style="width: 200px;">ADDRESS</th>
 			</tr>
 		</thead>
 		<tbody>

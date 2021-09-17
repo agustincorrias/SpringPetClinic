@@ -1,14 +1,27 @@
 package com.petclinic.corrias.services.map;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.springframework.stereotype.Service;
 
 import com.petclinic.corrias.model.Owner;
+import com.petclinic.corrias.model.Pet;
+import com.petclinic.corrias.model.PetType;
 import com.petclinic.corrias.services.OwnerService;
+import com.petclinic.corrias.services.PetService;
+import com.petclinic.corrias.services.PetTypeService;
 
 @Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
+
+	private final PetTypeService petTypeService;
+	private final PetService petService;
+
+	public OwnerServiceMap(PetTypeService petTypeService, PetService petService) {
+		this.petTypeService = petTypeService;
+		this.petService = petService;
+	}
 
 	@Override
 	public Set<Owner> findAll() {
@@ -22,6 +35,23 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
 	@Override
 	public Owner save(Owner object) {
+		if (object != null) {
+			if (object.getPets() != null) {
+				object.getPets().forEach(pet -> {
+					if (pet.getType() != null) {
+						if (pet.getType().getId() == null) {
+							pet.setType(petTypeService.save(pet.getType()));
+						}
+					} else {
+						throw new RuntimeException("Pet type is required");
+					}
+					if(pet.getId() == null) {
+						Pet savedPet = petService.save(pet);
+						pet.setId(savedPet.getId());
+					}
+				});
+			}
+		}
 		return super.save(object);
 	}
 

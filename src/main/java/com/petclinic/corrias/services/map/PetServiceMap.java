@@ -2,11 +2,13 @@ package com.petclinic.corrias.services.map;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.petclinic.corrias.model.Pet;
 import com.petclinic.corrias.services.PetService;
 
+@Service
 public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
-
 	
 	@Override
 	public Set<Pet> findAll() {
